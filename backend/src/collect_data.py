@@ -39,13 +39,16 @@ def augment(xy_pairs, z_vals_by_entity):
     out[entity] = entity_triples
   return out
 
-def get_entity_population(entity):
-  return int(zdf.loc[zdf['Entity'] == entity][col_name_lookup['population']].iloc[0].replace(',', ''))
+def clean(s):
+  return s.replace(',', '').replace('%', '')
+
+def get_entity_public_metric(entity, metric):
+  return float(clean(str(zdf.loc[zdf['Entity'] == entity][col_name_lookup[metric]].iloc[0])))
 
 def collect_data(metadata):
   entities = metadata['entities']
   viz_type = metadata['viz_type']
-  dept, public_metric = metadata['y'], metadata['z']
+  dept = metadata['y']
   y_row_dfs = [ydf.loc[ydf['Entity'] == entity].loc[ydf['Department'] == col_name_lookup[dept]].drop('Department', 1) for entity in entities] 
   xy_pairs = {}
   for df in y_row_dfs:
@@ -54,13 +57,11 @@ def collect_data(metadata):
     entity_pairs = []
     for _, row in df.iterrows():
       entity = list(row)[0]
-      entity_population = get_entity_population(entity)
-      entity_pairs = zip(headers[1:], map(lambda val: float(val.replace(',', '')) / entity_population, row[1:]))
+      entity_population = get_entity_public_metric(entity, 'population')
+      entity_pairs = zip(headers[1:], map(lambda val: float(clean(val)) / entity_population, row[1:]))
       xy_pairs[entity] = entity_pairs
   if viz_type == 'all_entity_spend_py_sized_by_z':
-    public_metrics = [zdf.loc[zdf['Entity'] == entity][col_name_lookup[public_metric]].iloc[0] for entity in entities]
-    return format_for_chart(augment(xy_pairs, dict(zip(entities, public_metrics))))
+    public_metric_name = metadata['z']
+    public_metrics = [get_entity_public_metric(entity, public_metric_name) for entity in entities]
+    return format_for_chart(augment(xy_pairs, dict(zip(entities, public_metric_name))))
   return format_for_chart(xy_pairs)
-
-
-print get_entity_population("Napa, CA")

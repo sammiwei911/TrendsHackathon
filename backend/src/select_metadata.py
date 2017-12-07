@@ -6,6 +6,13 @@ viz_types = pkl.load(open('../db/viz_types.pkl'))
 y_axis = pkl.load(open('../db/y.pkl'))
 z_axis = pkl.load(open('../db/z.pkl'))
 
+unit_lookup = {
+  'population': 'people',
+  'robberies_per_100k': 'people',
+  'college_grads': 'percent',
+  'income_per_capita': 'dollars'
+}
+
 def weighted_random(tup_list):
   to_flatten = map(lambda x: [x[0]] * x[1], tup_list)
   to_choose_from = [item for sublist in to_flatten for item in sublist]
@@ -15,5 +22,10 @@ def generate_chart_metadata():
   viz_type = weighted_random(viz_types)
   ents = map(lambda x: x[0], entities) if viz_type == 'all_entity_spend_py_sized_by_z' else [weighted_random(entities)]
   y = weighted_random(y_axis)
-  z = weighted_random(z_axis)
-  return {'entities': ents, 'viz_type': viz_type, 'y': y, 'z': z}
+  out = {'entities': ents, 'viz_type': viz_type, 'y': y, 'y_units': 'dollars'}
+  if viz_type == 'all_entity_spend_py_sized_by_z':
+    z = weighted_random(z_axis)
+    out['z'] = z
+    out['z_units'] = unit_lookup[z]
+  return out
+
