@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 from flask_restful import Resource, Api
 import json
 
@@ -17,24 +17,24 @@ class GenerateChartRoute(Resource):
   def get(self):
     metadata = generate_chart_metadata()
     data = collect_data(metadata)
-    return jsonify({'metadata' : metadata, 'data': data}), 200, access_control_response_headers
+    return make_response(jsonify({'metadata' : metadata, 'data': data}), 200, access_control_response_headers)
     
 class ReportClickRoute(Resource):
   def post(self):
     click_json = json.loads(request.data)
     entities, viz_types, y, z = cc.add_click(click_json)
-    return jsonify({'entity_counts' : entities, 'viz_type_counts': viz_types, 'y_counts': y, 'z_counts': z}), 200, access_control_response_headers
+    return make_response(jsonify({'entity_counts' : entities, 'viz_type_counts': viz_types, 'y_counts': y, 'z_counts': z}), 200, access_control_response_headers)
 
 class SetClicksRoute(Resource):
   def post(self):
     click_json = json.loads(request.data)
     entities, viz_types, y, z = cc.set_click_totals(click_json)
-    return jsonify({'entity_counts' : entities, 'viz_type_counts': viz_types, 'y_counts': y, 'z_counts': z}), 200, access_control_response_headers
+    return make_response(jsonify({'entity_counts' : entities, 'viz_type_counts': viz_types, 'y_counts': y, 'z_counts': z}), 200, access_control_response_headers)
 
 class ResetClicksRoute(Resource):
   def post(self):
     entities, viz_types, y, z = cc.reset_clicks()
-    return jsonify({'entity_counts' : entities, 'viz_type_counts': viz_types, 'y_counts': y, 'z_counts': z}), 200, access_control_response_headers
+    return make_response(jsonify({'entity_counts' : entities, 'viz_type_counts': viz_types, 'y_counts': y, 'z_counts': z}), 200, access_control_response_headers)
 
 api.add_resource(ReportClickRoute, '/increment_clicks')
 api.add_resource(GenerateChartRoute, '/generate_chart')
