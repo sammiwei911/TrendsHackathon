@@ -1,0 +1,18 @@
+(lp0
+(S'Alameda, CA'
+p1
+I1
+tp2
+a(S'Newark, NJ'
+p3
+I1
+tp4
+a(S'Fountain, CO'
+p5
+I1
+tp6
+a(S'Napa, CA'
+p7
+I1
+tp8
+a.

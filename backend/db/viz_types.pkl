@@ -1,0 +1,14 @@
+(lp0
+(S'single_entity_v_others_pc_py'
+p1
+I1
+tp2
+a(S'single_entity_spend_pc_py'
+p3
+I1
+tp4
+a(S'all_entity_spend_py_sized_by_z'
+p5
+I1
+tp6
+a.
