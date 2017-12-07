@@ -11,7 +11,7 @@ import change_clicks as cc
 app = Flask(__name__)
 api = Api(app)
 
-access_control_response_headers = {'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'}
+access_control_response_headers = {'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept', 'Access-Control-Allow-Methods': 'GET, POST'}
 
 class GenerateChartRoute(Resource):
   def get(self):
