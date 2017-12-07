@@ -8,7 +8,7 @@ z_axis = pkl.load(open('../db/z.pkl'))
 
 unit_lookup = {
   'population': 'people',
-  'robberies_per_100k': 'people',
+  'robberies_per_100k': 'people_per_100k',
   'college_grads': 'percent',
   'income_per_capita': 'dollars'
 }

@@ -63,5 +63,5 @@ def collect_data(metadata):
   if viz_type == 'all_entity_spend_py_sized_by_z':
     public_metric_name = metadata['z']
     public_metrics = [get_entity_public_metric(entity, public_metric_name) for entity in entities]
-    return chart_format(augment(xy_pairs, dict(zip(entities, public_metric_name))))
+    return chart_format(augment(xy_pairs, dict(zip(entities, public_metrics))))
   return chart_format(xy_pairs)
