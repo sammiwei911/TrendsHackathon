@@ -7,20 +7,20 @@ To run the server, do the following:
 Example json required to increment clicks:
 ```
 {
-	'entity': 'Napa, CA', 
-	'viz_type': 'single_entity_spend_pc_py', 
-	'y': 'administrative', 
-	'z': 'income_per_capita'
+	"entity": "Napa, CA", 
+	"viz_type": "single_entity_spend_pc_py", 
+	"y": "administrative", 
+	"z": "income_per_capita"
 }
 ```
 
 Example json for setting click totals:
 ```
 {
-	'entity': ['Napa, CA', 100], 
-	'viz_type': ['single_entity_spend_pc_py', 100], 
-	'y': ['administrative', 100], 
-	'z': ['income_per_capita',100]
+ "entities": {"Napa, CA": 100, "Alameda, CA": 72}, 
+ "viz_types": {"single_entity_spend_pc_py": 100}, 
+ "y": {"administrative": 100, "police": 59}, 
+ "z": {"income_per_capita": 105, "population": 46}
 }
 ```
 

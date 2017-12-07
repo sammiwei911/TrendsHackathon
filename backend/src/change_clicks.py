@@ -5,7 +5,7 @@ viz_types = dict(pkl.load(open('../db/viz_types.pkl')))
 y_axis = dict(pkl.load(open('../db/y.pkl')))
 z_axis = dict(pkl.load(open('../db/z.pkl')))
 
-def add_clicks(json):
+def increment_clicks(json):
   entities[json['entity']] += 1
   viz_types[json['viz_type']] += 1
   y_axis[json['y']] += 1
@@ -13,24 +13,37 @@ def add_clicks(json):
   dump_all()
   return (entities, viz_types, y_axis, z_axis)
 
-def reset_vals(d, val):
+def reset_scores(d, val):
   for k in d:
     d[k] = val
   return d
 
 def reset_clicks():
-  reset_vals(entities, 1)
-  reset_vals(viz_types, 1)
-  reset_vals(y_axis, 1)
-  reset_vals(z_axis, 1)
+  reset_scores(entities, 1)
+  reset_scores(viz_types, 1)
+  reset_scores(y_axis, 1)
+  reset_scores(z_axis, 1)
   dump_all()
   return (entities, viz_types, y_axis, z_axis)
 
+def set_scores(f, t):
+  for k in t:
+    f[k] = t[k]
+  return f
+
 def set_click_totals(json):
-  entities[json['entity'][0]] = json['entity'][1]
-  viz_types[json['viz_type'][0]] = json['viz_type'][1]
-  y_axis[json['y'][0]] = json['y'][1]
-  z_axis[json['z'][0]] = json['z'][1]
+  entities_updates = json['entities']
+  viz_types_updates = json['viz_types']
+  y_axis_updates = json['y']
+  z_axis_updates = json['z']
+  global entities
+  entities = set_scores(entities, entities_updates)
+  global viz_types
+  viz_types = set_scores(viz_types, viz_types_updates)
+  global y_axis
+  y_axis = set_scores(y_axis, y_axis_updates)
+  global z_axis
+  z_axis = set_scores(z_axis, z_axis_updates)
   dump_all()
   return (entities, viz_types, y_axis, z_axis)
 
@@ -58,9 +71,9 @@ def reload_and_print():
 
 # See below for the type of json i'm expecting
 #
-# add_clicks({'entity': 'Napa, CA', 'viz_type': 'single_entity_spend_pc_py', 'y': 'administrative', 'z': 'income_per_capita'})
+# increment_clicks({'entity': 'Napa, CA', 'viz_type': 'single_entity_spend_pc_py', 'y': 'administrative', 'z': 'income_per_capita'})
 # reload_and_print()
-# set_click_totals({'entity': ['Napa, CA', 100], 'viz_type': ['single_entity_spend_pc_py', 100], 'y': ['administrative', 100], 'z': ['income_per_capita',100]})
+# set_click_totals({'entities': {'Napa, CA': 100, 'Alameda, CA': 72}, 'viz_types': {'single_entity_spend_pc_py': 100}, 'y': {'administrative': 100, 'police': 59}, 'z': {'income_per_capita': 100, 'population': 46}})
 # reload_and_print()
 # reset_clicks()
 # reload_and_print()
