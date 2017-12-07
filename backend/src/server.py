@@ -24,7 +24,7 @@ class GenerateChartRoute(Resource):
 class ReportClickRoute(Resource):
   def post(self):
     click_json = json.loads(request.data)
-    entities, viz_types, y, z = cc.add_click(click_json)
+    entities, viz_types, y, z = cc.increment_clicks(click_json)
     return make_response(jsonify({'entity_counts' : entities, 'viz_type_counts': viz_types, 'y_counts': y, 'z_counts': z}), 200)
 
 class SetClicksRoute(Resource):
