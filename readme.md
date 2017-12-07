@@ -13,6 +13,7 @@ Example json required to increment clicks:
   "z": "income_per_capita"
 }
 ```
+Route is `/increment_clicks` (POST).
 
 Example json for setting click totals:
 ```
@@ -23,5 +24,8 @@ Example json for setting click totals:
  "z": {"income_per_capita": 105, "population": 46}
 }
 ```
+Route is `/set_clicks` (POST).
 
-No json is required to reset clicks.
+No json is required to reset clicks. Route is `/reset_clicks` (POST).
+
+The route to generate a chart is `/generate_chart` (GET).
