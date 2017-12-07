@@ -34,8 +34,8 @@ class ResetClicksRoute(Resource):
     entities, viz_types, y, z = cc.reset_clicks()
     return jsonify({'entity_counts' : entities, 'viz_type_counts': viz_types, 'y_counts': y, 'z_counts': z})
 
-api.add_resource(ReportClickRoute, '/report_clicks')
-api.add_resource(GenerateChartRoute, '/generate_charts')
+api.add_resource(ReportClickRoute, '/increment_clicks')
+api.add_resource(GenerateChartRoute, '/generate_chart')
 api.add_resource(SetClicksRoute, '/set_clicks')
 api.add_resource(ResetClicksRoute, '/reset_clicks')
 
