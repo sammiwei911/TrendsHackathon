@@ -18,14 +18,18 @@ def weighted_random(tup_list):
   to_choose_from = [item for sublist in to_flatten for item in sublist]
   return rand.choice(to_choose_from)
 
-def generate_chart_metadata():
-  viz_type = weighted_random(viz_types)
+def get_ents_by_viz_type(viz_type):
   ents = map(lambda x: x[0], entities) # by default we take all entities
   if viz_type == 'single_entity_spend_pc_py':
     ents = [weighted_random(entities)]
   elif viz_type == 'single_entity_v_others_pc_py':
     num_ents = rand.randint(1, len(entities))
     ents = rand.sample(ents, num_ents)
+  return ents
+
+def generate_chart_metadata():
+  viz_type = weighted_random(viz_types)
+  ents = get_ents_by_viz_type(viz_type)
   y = weighted_random(y_axis)
   out = {'entities': ents, 'viz_type': viz_type, 'y': y, 'y_units': 'dollars'}
   if viz_type == 'all_entity_spend_py_sized_by_z':

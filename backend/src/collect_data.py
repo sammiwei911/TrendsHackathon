@@ -23,7 +23,7 @@ def format_tuple(tup):
     return {'x': tup[0], 'y': tup[1]}
 
 
-def format_for_chart(d):
+def chart_format(d):
   out = dict()
   for entity in d:
     entity_tuples = d[entity]
@@ -63,5 +63,5 @@ def collect_data(metadata):
   if viz_type == 'all_entity_spend_py_sized_by_z':
     public_metric_name = metadata['z']
     public_metrics = [get_entity_public_metric(entity, public_metric_name) for entity in entities]
-    return format_for_chart(augment(xy_pairs, dict(zip(entities, public_metric_name))))
-  return format_for_chart(xy_pairs)
+    return chart_format(augment(xy_pairs, dict(zip(entities, public_metric_name))))
+  return chart_format(xy_pairs)
