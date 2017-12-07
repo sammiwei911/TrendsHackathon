@@ -2,6 +2,7 @@
 
 from flask import Flask, request, jsonify
 from flask_restful import Resource, Api
+from flask_cors import CORS
 import json
 
 from select_metadata import generate_chart_metadata
@@ -10,6 +11,8 @@ import change_clicks as cc
 
 app = Flask(__name__)
 api = Api(app)
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+
 
 class GenerateChartRoute(Resource):
   def get(self):
