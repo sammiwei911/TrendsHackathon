@@ -45,11 +45,14 @@ def clean(s):
 def get_entity_public_metric(entity, metric):
   return float(clean(str(zdf.loc[zdf['Entity'] == entity][col_name_lookup[metric]].iloc[0])))
 
+def get_row_by_entity_and_dept(entity, dept):
+  return ydf.loc[ydf['Entity'] == entity].loc[ydf['Department'] == col_name_lookup[dept]].drop('Department', 1)
+
 def collect_data(metadata):
   entities = metadata['entities']
   viz_type = metadata['viz_type']
   dept = metadata['y']
-  y_row_dfs = [ydf.loc[ydf['Entity'] == entity].loc[ydf['Department'] == col_name_lookup[dept]].drop('Department', 1) for entity in entities] 
+  y_row_dfs = [get_row_by_entity_and_dept(entity, dept) for entity in entities] 
   xy_pairs = {}
   for df in y_row_dfs:
     headers = list(df.columns.values)
@@ -58,9 +61,12 @@ def collect_data(metadata):
     for _, row in df.iterrows():
       entity = list(row)[0]
       entity_population = get_entity_public_metric(entity, 'population')
-      entity_pairs = zip(headers[1:], map(lambda val: float(clean(val)) / entity_population, row[1:]))
+      # years should be the x values unless we are looking at spend v spend viz type
+      xvals = headers[1:] if viz_type != 'all_entity_spend_v_spend_sized_by_z' else map(lambda x: float(clean(x)), get_row_by_entity_and_dept(entity, metadata['y1']).iloc[0][1:])
+      yvals = map(lambda val: float(clean(val)) / entity_population, row[1:])
+      entity_pairs = zip(xvals, yvals)
       xy_pairs[entity] = entity_pairs
-  if viz_type == 'all_entity_spend_py_sized_by_z':
+  if 'all' in viz_type:
     public_metric_name = metadata['z']
     public_metrics = [get_entity_public_metric(entity, public_metric_name) for entity in entities]
     return chart_format(augment(xy_pairs, dict(zip(entities, public_metrics))))
