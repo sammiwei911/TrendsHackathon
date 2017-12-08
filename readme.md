@@ -29,3 +29,8 @@ Route is `/set_clicks` (POST).
 No json is required to reset clicks. Route is `/reset_clicks` (POST).
 
 The route to generate a chart is `/generate_chart` (GET).
+
+
+To run the front end
+1. go to the folder my-awesome-vis-app
+2. run `npm run start`
