@@ -7,11 +7,11 @@ a(S'single_entity_spend_pc_py'
 p3
 I1
 tp4
-a(S'all_entity_spend_py_sized_by_z'
+a(S'all_entity_spend_v_spend_sized_by_z'
 p5
 I1
 tp6
-a(S'all_entity_spend_v_spend_sized_by_z'
+a(S'all_entity_spend_py_sized_by_z'
 p7
 I1
 tp8

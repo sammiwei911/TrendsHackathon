@@ -10,6 +10,8 @@ def increment_clicks(json):
   viz_types[json['viz_type']] += 1
   y_axis[json['y']] += 1
   z_axis[json['z']] += 1
+  if 'y1' in json:
+    y_axis[json['y1']] += 1
   dump_all()
   return (entities, viz_types, y_axis, z_axis)
 
