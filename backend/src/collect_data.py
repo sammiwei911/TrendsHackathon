@@ -1,4 +1,5 @@
 import pandas as pd
+import random as rand
 
 ydf = pd.read_csv('../db/entityy.csv')
 zdf = pd.read_csv('../db/entityz.csv')
@@ -54,6 +55,7 @@ def collect_data(metadata):
   dept = metadata['y']
   y_row_dfs = [get_row_by_entity_and_dept(entity, dept) for entity in entities] 
   xy_pairs = {}
+  spend_v_spend_year = rand.randint(0, len(y_row_dfs[0].columns) - 1)
   for df in y_row_dfs:
     headers = list(df.columns.values)
     entity = ""
@@ -64,6 +66,9 @@ def collect_data(metadata):
       # years should be the x values unless we are looking at spend v spend viz type
       xvals = headers[1:] if viz_type != 'all_entity_spend_v_spend_sized_by_z' else map(lambda x: float(clean(x)), get_row_by_entity_and_dept(entity, metadata['y1']).iloc[0][1:])
       yvals = map(lambda val: float(clean(val)) / entity_population, row[1:])
+      if viz_type == 'all_entity_spend_v_spend_sized_by_z':
+        xvals = [xvals[spend_v_spend_year]]
+        yvals = [yvals[spend_v_spend_year]]
       entity_pairs = zip(xvals, yvals)
       xy_pairs[entity] = entity_pairs
   if 'all' in viz_type:
