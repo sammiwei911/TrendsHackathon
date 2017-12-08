@@ -93,15 +93,31 @@ class App extends Component {
     }).join(' ');;
   }
 
-  parseHeader({viz_type, z}){
+  capitalize(string){
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  parseHeader({viz_type, z, y1, y}){
     if (viz_type === 'single_entity_spend_pc_py'){
-      return 'Spend Per Capita';
+      return this.parseTitleData(y);
     } else if (viz_type === 'single_entity_v_others_pc_py'){
-      return 'Entity Per Capita';
+      return this.parseTitleData(y);
     } else if (viz_type === 'all_entity_spend_py_sized_by_z'){
-      return 'All Entity Spend By ' + this.parseTitleData(z);
+      return this.parseTitleData(y) + ' VS ' + this.parseTitleData(z);
     } else {
-      return 'All Entity Spend By Spend';
+      return this.parseTitleData(y) + ' VS ' + this.parseTitleData(y1);
+    }
+  }
+
+  parseTag({viz_type, z}){
+    if (viz_type === 'single_entity_spend_pc_py') {
+      return 'Per Capita';
+    } else if (viz_type === 'single_entity_v_others_pc_py') {
+      return 'Per Capita';
+    } else if (viz_type === 'all_entity_spend_py_sized_by_z') {
+      return 'Spend($)';
+    } else {
+      return 'Spend By ' + this.parseTitleData(z);
     }
   }
 
@@ -116,7 +132,7 @@ class App extends Component {
                 return (
                   <Grid.Column>
                     <Header size='medium'>{this.parseHeader(responseData.metadata)}</Header>
-                    <Label style={{ 'marginBottom': '50px' }} as='a' color='yellow' tag>{this.parseTitleData(responseData.metadata.y)}</Label>
+                    <Label style={{ 'marginBottom': '50px' }} as='a' color='yellow' tag>{this.parseTag(responseData.metadata)}</Label>
                   <XYPlot height={350} width={350}>
                     <VerticalGridLines />
                     <HorizontalGridLines />
@@ -147,7 +163,7 @@ class App extends Component {
                 return (
                   <Grid.Column>
                     <Header size='medium'>{this.parseHeader(responseData.metadata)}</Header>
-                    <Label style={{ 'marginBottom': '50px' }} as='a' color='teal' tag>{this.parseTitleData(responseData.metadata.y)}</Label>
+                    <Label style={{ 'marginBottom': '50px' }} as='a' color='teal' tag>{this.parseTag(responseData.metadata)}</Label>
                   <XYPlot height={350} width={350}>
                     <VerticalGridLines />
                     <HorizontalGridLines />
