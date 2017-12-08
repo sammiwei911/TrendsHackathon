@@ -3,10 +3,8 @@ import './App.css';
 import '../node_modules/react-vis/dist/style.css';
 import {
   XYPlot,
-  LineSeries,
   LineMarkSeries,
   MarkSeries,
-  VerticalBarSeries,
   VerticalGridLines,
   HorizontalGridLines,
   XAxis,
