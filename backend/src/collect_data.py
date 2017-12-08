@@ -55,7 +55,7 @@ def collect_data(metadata):
   dept = metadata['y']
   y_row_dfs = [get_row_by_entity_and_dept(entity, dept) for entity in entities] 
   xy_pairs = {}
-  spend_v_spend_year = rand.randint(0, len(y_row_dfs[0].columns) - 1)
+  spend_v_spend_year = rand.randint(0, len(y_row_dfs[0].columns) - 2) # - 2 because there is one fewer year than there are columns
   for df in y_row_dfs:
     headers = list(df.columns.values)
     entity = ""
