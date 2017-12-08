@@ -8,12 +8,12 @@ z_axis = dict(pkl.load(open('../db/z.pkl')))
 def increment_clicks(json):
   for entity in json['entities']:
     entities[entity] += 1
-  viz_types[json['viz_type']] += 1
-  y_axis[json['y']] += 1
+  viz_types[json['viz_type']] += 4
+  y_axis[json['y']] += 3
   if 'z' in json:
-    z_axis[json['z']] += 1
+    z_axis[json['z']] += 1.5
   if 'y1' in json:
-    y_axis[json['y1']] += 1
+    y_axis[json['y1']] += 2
   dump_all()
   return (entities, viz_types, y_axis, z_axis)
 

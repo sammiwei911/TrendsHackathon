@@ -1,6 +1,8 @@
 /bin
 /lib
 /include
+/db
 /.Python
 pip*
 *.pyc
+*.pkl
